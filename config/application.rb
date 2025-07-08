@@ -30,6 +30,9 @@ module Couple
 
     # 日本語設定
     config.i18n.default_locale = :ja
+    
+    # Active Storage設定
+    config.active_storage.variant_processor = :mini_magick
 
     # CORS 設定（LIFF用）
     config.middleware.insert_before 0, Rack::Cors do

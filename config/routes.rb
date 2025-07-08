@@ -2,12 +2,6 @@ Rails.application.routes.draw do
   # ヘルスチェック
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Active Storage routes for file serving in production
-  if Rails.env.production?
-    get "/rails/active_storage/blobs/:signed_id/*filename" => "active_storage/blobs#show", as: :rails_service_blob
-    get "/rails/active_storage/representations/:signed_blob_id/:variation_key/*filename" => "active_storage/representations#show", as: :rails_blob_representation
-    get "/rails/active_storage/disk/:encoded_key/*filename" => "active_storage/disk#show", as: :rails_disk_service
-  end
 
   # ルート - ログイン後はダッシュボードにリダイレクト
   root "sessions#new"

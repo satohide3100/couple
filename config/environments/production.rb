@@ -57,18 +57,7 @@ Rails.application.configure do
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
   
-  # Set the default URL options for Active Storage
-  if ENV['RAILWAY_PUBLIC_DOMAIN'].present?
-    config.action_controller.default_url_options = {
-      host: ENV['RAILWAY_PUBLIC_DOMAIN'],
-      protocol: 'https'
-    }
-    
-    config.action_mailer.default_url_options = {
-      host: ENV['RAILWAY_PUBLIC_DOMAIN'],
-      protocol: 'https'
-    }
-  end
+  # Set the default URL options for Active Storage (will be set via environment variable)
 
   # Log to STDOUT by default
   config.logger = ActiveSupport::Logger.new(STDOUT)
