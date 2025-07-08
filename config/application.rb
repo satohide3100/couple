@@ -30,6 +30,7 @@ module Couple
 
     # 日本語設定
     config.i18n.default_locale = :ja
+    config.i18n.available_locales = [:ja, :en]
     
 
     # CORS 設定（LIFF用）

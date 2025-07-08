@@ -28,7 +28,10 @@ class ApplicationController < ActionController::Base
       
       if File.exist?(actual_file_path)
         Rails.logger.info "Serving file from: #{actual_file_path}"
-        send_file actual_file_path, disposition: 'inline'
+        # ファイル配信時はI18nロケールの影響を避ける
+        I18n.with_locale(:en) do
+          send_file actual_file_path, disposition: 'inline'
+        end
       else
         Rails.logger.info "File not found in either location"
         # List the actual directory contents to see what files exist
