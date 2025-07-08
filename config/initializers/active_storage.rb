@@ -7,5 +7,11 @@ Rails.application.configure do
   if Rails.env.production?
     config.active_storage.draw_routes = true
     config.active_storage.resolve_model_to_route = :rails_storage_proxy
+    
+    # Set the host for Active Storage URLs
+    config.active_storage.url_expires_in = 1.hour
+    
+    # Force SSL for Active Storage URLs
+    config.force_ssl = true
   end
 end

@@ -25,6 +25,9 @@ Rails.application.configure do
 
   # Enable serving static files from `public/` for Active Storage
   config.public_file_server.enabled = true
+  config.public_file_server.headers = {
+    'Cache-Control' => 'public, max-age=31536000'
+  }
 
   # Compress CSS using a preprocessor.
   # config.assets.css_compressor = :sass
@@ -53,6 +56,17 @@ Rails.application.configure do
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
+  
+  # Set the default URL options for Active Storage
+  config.action_controller.default_url_options = {
+    host: ENV['RAILWAY_PUBLIC_DOMAIN'],
+    protocol: 'https'
+  }
+  
+  config.action_mailer.default_url_options = {
+    host: ENV['RAILWAY_PUBLIC_DOMAIN'],
+    protocol: 'https'
+  }
 
   # Log to STDOUT by default
   config.logger = ActiveSupport::Logger.new(STDOUT)

@@ -6,7 +6,7 @@ local:
   service: Disk
   root: <%= Rails.root.join("storage") %>
 
-# Production storage for Railway deployment (persistent volume)
+# Production storage for Railway deployment
 production:
   service: Disk
   root: <%= Rails.root.join("storage") %>
