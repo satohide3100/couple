@@ -29,4 +29,9 @@ Rails.application.routes.draw do
       patch :move
     end
   end
+  
+  # アップロードされたファイルの配信（本番環境用）
+  if Rails.env.production?
+    get '/uploads/*path', to: 'application#serve_file'
+  end
 end
