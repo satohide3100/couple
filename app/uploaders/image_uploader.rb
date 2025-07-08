@@ -9,8 +9,8 @@ class ImageUploader < CarrierWave::Uploader::Base
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
     if Rails.env.production?
-      # Use tmp directory in production to avoid permission issues
-      "tmp/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+      # Use Railway Volume mounted at /rails/storage/uploads
+      "storage/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
     else
       "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
     end

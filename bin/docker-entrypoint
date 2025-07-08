@@ -2,8 +2,8 @@
 
 # If running the rails server then create or migrate existing database
 if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
-  # Create uploads directory in tmp (writable location)
-  mkdir -p /rails/tmp/uploads
+  # Create uploads directory in Railway Volume mount point
+  mkdir -p /rails/storage/uploads
   
   ./bin/rails db:prepare
 fi
