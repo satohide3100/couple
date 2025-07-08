@@ -58,15 +58,17 @@ Rails.application.configure do
   config.force_ssl = true
   
   # Set the default URL options for Active Storage
-  config.action_controller.default_url_options = {
-    host: ENV['RAILWAY_PUBLIC_DOMAIN'],
-    protocol: 'https'
-  }
-  
-  config.action_mailer.default_url_options = {
-    host: ENV['RAILWAY_PUBLIC_DOMAIN'],
-    protocol: 'https'
-  }
+  if ENV['RAILWAY_PUBLIC_DOMAIN'].present?
+    config.action_controller.default_url_options = {
+      host: ENV['RAILWAY_PUBLIC_DOMAIN'],
+      protocol: 'https'
+    }
+    
+    config.action_mailer.default_url_options = {
+      host: ENV['RAILWAY_PUBLIC_DOMAIN'],
+      protocol: 'https'
+    }
+  end
 
   # Log to STDOUT by default
   config.logger = ActiveSupport::Logger.new(STDOUT)
