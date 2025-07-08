@@ -3,25 +3,39 @@
 # If running the rails server then create or migrate existing database
 if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
   # Create symlink from uploads to persistent volume if volume exists
-  if [ -d "/rails/storage" ]; then
+  # Check for Railway Volume mount at /data (common mount path)
+  if [ -d "/data" ]; then
+    echo "Found Railway Volume at: /data"
     # Ensure volume directory exists and create symlink
-    sudo mkdir -p /rails/storage/uploads
-    sudo chown -R rails:rails /rails/storage/uploads
+    sudo mkdir -p "/data/uploads"
+    sudo chown -R rails:rails "/data/uploads"
     
     # Remove existing uploads directory if it exists and create symlink
     sudo rm -rf /rails/uploads
-    sudo ln -sf /rails/storage/uploads /rails/uploads
+    sudo ln -sf "/data/uploads" /rails/uploads
     
     # Also create tmp/uploads symlink for backup compatibility
     sudo rm -rf /rails/tmp/uploads
-    sudo ln -sf /rails/storage/uploads /rails/tmp/uploads
+    sudo ln -sf "/data/uploads" /rails/tmp/uploads
     
     # Ensure rails user owns the symlinks
     sudo chown -h rails:rails /rails/uploads /rails/tmp/uploads
+    echo "Created symlinks to Railway Volume at /data"
+  elif [ -d "/rails/storage" ]; then
+    # Fallback to /rails/storage if available
+    sudo mkdir -p /rails/storage/uploads
+    sudo chown -R rails:rails /rails/storage/uploads
+    sudo rm -rf /rails/uploads
+    sudo ln -sf /rails/storage/uploads /rails/uploads
+    sudo rm -rf /rails/tmp/uploads
+    sudo ln -sf /rails/storage/uploads /rails/tmp/uploads
+    sudo chown -h rails:rails /rails/uploads /rails/tmp/uploads
+    echo "Created symlinks to /rails/storage"
   else
-    # Fallback to uploads directory if no volume
+    # Fallback to local directories if no volume
     mkdir -p /rails/uploads
     mkdir -p /rails/tmp/uploads
+    echo "Using local directories (no persistent volume)"
   fi
   
   ./bin/rails db:prepare
