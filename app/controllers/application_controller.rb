@@ -7,28 +7,36 @@ class ApplicationController < ActionController::Base
   # アップロードされたファイルの配信（本番環境用）
   def serve_file
     if Rails.env.production?
-      file_path = Rails.root.join('tmp', 'uploads', params[:path])
+      # Try both uploads and tmp/uploads paths
+      file_path = Rails.root.join('uploads', params[:path])
+      tmp_file_path = Rails.root.join('tmp', 'uploads', params[:path])
       
       # デバッグログを追加
       Rails.logger.info "=== File Serve Debug ==="
       Rails.logger.info "Requested path: #{params[:path]}"
-      Rails.logger.info "Full file path: #{file_path}"
+      Rails.logger.info "File path: #{file_path}"
+      Rails.logger.info "Tmp file path: #{tmp_file_path}"
       Rails.logger.info "File exists: #{File.exist?(file_path)}"
+      Rails.logger.info "Tmp file exists: #{File.exist?(tmp_file_path)}"
       
-      # ディレクトリの内容も確認
-      dir_path = file_path.dirname
-      if Dir.exist?(dir_path)
-        Rails.logger.info "Directory contents: #{Dir.entries(dir_path)}"
-      else
-        Rails.logger.info "Directory does not exist: #{dir_path}"
-      end
+      # Check both possible locations
+      actual_file_path = File.exist?(file_path) ? file_path : tmp_file_path
       
-      if File.exist?(file_path)
-        Rails.logger.info "Serving file: #{file_path}"
-        send_file file_path, disposition: 'inline'
+      if File.exist?(actual_file_path)
+        Rails.logger.info "Serving file from: #{actual_file_path}"
+        send_file actual_file_path, disposition: 'inline'
       else
-        Rails.logger.info "File not found: #{file_path}"
-        render plain: "File not found: #{file_path}", status: 404
+        Rails.logger.info "File not found in either location"
+        # List directories for debugging
+        ['uploads', 'tmp/uploads'].each do |dir|
+          full_dir = Rails.root.join(dir)
+          if Dir.exist?(full_dir)
+            Rails.logger.info "#{dir} directory contents: #{Dir.entries(full_dir)}"
+          else
+            Rails.logger.info "Directory does not exist: #{full_dir}"
+          end
+        end
+        render plain: "File not found", status: 404
       end
     else
       render plain: 'Not found', status: 404

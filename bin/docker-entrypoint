@@ -2,17 +2,22 @@
 
 # If running the rails server then create or migrate existing database
 if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
-  # Create symlink from tmp/uploads to persistent volume if volume exists
+  # Create symlink from uploads to persistent volume if volume exists
   if [ -d "/rails/storage" ]; then
     # Ensure volume directory exists and create symlink
     sudo mkdir -p /rails/storage/uploads
     sudo chown -R rails:rails /rails/storage/uploads
     
-    # Remove existing tmp/uploads if it exists and create symlink
+    # Remove existing uploads directory if it exists and create symlink
+    rm -rf /rails/uploads
+    ln -sf /rails/storage/uploads /rails/uploads
+    
+    # Also create tmp/uploads symlink for backup compatibility
     rm -rf /rails/tmp/uploads
     ln -sf /rails/storage/uploads /rails/tmp/uploads
   else
-    # Fallback to tmp directory if no volume
+    # Fallback to uploads directory if no volume
+    mkdir -p /rails/uploads
     mkdir -p /rails/tmp/uploads
   fi
   
