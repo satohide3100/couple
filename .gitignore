@@ -39,3 +39,4 @@
 
 /node_modules
 /log/*\n/tmp/*\n/vendor/bundle/
+/public/uploads

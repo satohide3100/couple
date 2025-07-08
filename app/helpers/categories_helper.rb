@@ -21,8 +21,8 @@ module CategoriesHelper
     end
     
     # Return uploaded image if available
-    if category.icon_image.attached?
-      return image_tag(category.icon_image, class: "w-full h-full object-cover rounded-full")
+    if category.icon_image?
+      return image_tag(category.icon_image.url, class: "w-full h-full object-cover rounded-full")
     end
     
     # Return custom emoji icon if available, otherwise default

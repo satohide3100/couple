@@ -10,9 +10,9 @@
   <div>
     <%= form.label :icon_image, "アイコン画像", class: "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" %>
     <div class="flex items-center gap-4 mb-3">
-      <% if category.icon_image.attached? %>
+      <% if category.icon_image? %>
         <div class="w-12 h-12 rounded-full overflow-hidden bg-gray-100">
-          <%= image_tag category.icon_image, class: "w-full h-full object-cover" %>
+          <%= image_tag category.icon_image.url, class: "w-full h-full object-cover" %>
         </div>
       <% end %>
       <%= form.file_field :icon_image, 

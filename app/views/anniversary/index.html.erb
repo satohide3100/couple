@@ -142,8 +142,8 @@
       <!-- カップル情報 -->
       <div class="bg-white/15 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 p-6 relative overflow-hidden group flex items-center justify-center" id="couple-info-container" style="min-height: 200px;">
         <!-- 背景画像 -->
-        <% if @background_photo&.image&.attached? %>
-          <div class="absolute inset-0 opacity-40 group-hover:opacity-50 transition-opacity duration-300 couple-bg-image" style="background-image: url('<%= url_for(@background_photo.image) %>'); background-size: contain; background-position: center; background-repeat: no-repeat;"></div>
+        <% if @background_photo&.image? %>
+          <div class="absolute inset-0 opacity-40 group-hover:opacity-50 transition-opacity duration-300 couple-bg-image" style="background-image: url('<%= @background_photo.image.url %>'); background-size: contain; background-position: center; background-repeat: no-repeat;"></div>
           <div class="absolute inset-0 bg-gradient-to-br from-blue-900/50 via-purple-900/50 to-pink-900/50"></div>
         <% else %>
           <div class="absolute inset-0 bg-gradient-to-br from-blue-400/10 via-purple-400/10 to-pink-400/10"></div>
@@ -168,8 +168,8 @@
                       data-modal-target-value="profile-modal-male"
                       class="relative group cursor-pointer">
                 <div class="w-20 h-20 bg-gradient-to-br from-cyan-400 via-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-2xl ring-4 ring-blue-400/30 transition-all duration-300 group-hover:ring-blue-400/50 overflow-hidden">
-                  <% if @male_profile&.avatar&.attached? %>
-                    <img src="<%= url_for(@male_profile.avatar) %>" class="w-full h-full object-cover" alt="ひでのプロフィール">
+                  <% if @male_profile&.avatar? %>
+                    <img src="<%= @male_profile.avatar.url %>" class="w-full h-full object-cover" alt="ひでのプロフィール">
                   <% else %>
                     <span class="text-white font-bold text-2xl drop-shadow-lg">ひ</span>
                   <% end %>
@@ -202,8 +202,8 @@
                       data-modal-target-value="profile-modal-female"
                       class="relative group cursor-pointer">
                 <div class="w-20 h-20 bg-gradient-to-br from-pink-400 via-rose-500 to-pink-600 rounded-full flex items-center justify-center shadow-2xl ring-4 ring-pink-400/30 transition-all duration-300 group-hover:ring-pink-400/50 overflow-hidden">
-                  <% if @female_profile&.avatar&.attached? %>
-                    <img src="<%= url_for(@female_profile.avatar) %>" class="w-full h-full object-cover" alt="りなのプロフィール">
+                  <% if @female_profile&.avatar? %>
+                    <img src="<%= @female_profile.avatar.url %>" class="w-full h-full object-cover" alt="りなのプロフィール">
                   <% else %>
                     <span class="text-white font-bold text-2xl drop-shadow-lg">り</span>
                   <% end %>

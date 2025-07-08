@@ -7,7 +7,7 @@ class Category < ApplicationRecord
 
   # アソシエーション
   has_many :places, dependent: :destroy
-  has_one_attached :icon_image
+  mount_uploader :icon_image, ImageUploader
 
   # スコープ
   scope :with_places_count, -> { left_joins(:places).group(:id).select("categories.*, COUNT(places.id) as places_count") }

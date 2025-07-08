@@ -10,6 +10,10 @@ gem "sqlite3", "~> 1.4", group: [:development, :test]
 gem "pg", "~> 1.1", group: :production
 gem "puma", ">= 5.0"
 
+# ファイルアップロード
+gem "carrierwave", "~> 3.0"
+gem "mini_magick", "~> 4.11"
+
 # JavaScript/CSS バンドリング
 gem "jsbundling-rails"
 gem "turbo-rails"

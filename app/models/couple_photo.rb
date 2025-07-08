@@ -1,6 +1,5 @@
 class CouplePhoto < ApplicationRecord
-  has_one_attached :image
-  
+  mount_uploader :image, ImageUploader
   
   scope :background_photos, -> { where(is_background: true) }
   scope :regular_photos, -> { where(is_background: false) }

@@ -1,5 +1,5 @@
 class Profile < ApplicationRecord
-  has_one_attached :avatar
+  mount_uploader :avatar, ImageUploader
   
   validates :name, presence: true
   validates :profile_type, presence: true, inclusion: { in: %w[male female] }
