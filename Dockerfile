@@ -59,7 +59,7 @@ COPY --from=build /rails /rails
 RUN useradd rails --create-home --shell /bin/bash && \
     mkdir -p /rails/storage/uploads && \
     chown -R rails:rails db log storage tmp && \
-    echo "rails ALL=(ALL) NOPASSWD: /bin/mkdir, /bin/chown, /bin/chmod" >> /etc/sudoers
+    echo "rails ALL=(ALL) NOPASSWD: /bin/mkdir, /bin/chown, /bin/chmod, /bin/rm, /bin/ln" >> /etc/sudoers
 USER rails:rails
 
 # Entrypoint prepares the database.

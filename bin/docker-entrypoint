@@ -9,12 +9,15 @@ if [ "${1}" == "./bin/rails" ] && [ "${2}" == "server" ]; then
     sudo chown -R rails:rails /rails/storage/uploads
     
     # Remove existing uploads directory if it exists and create symlink
-    rm -rf /rails/uploads
-    ln -sf /rails/storage/uploads /rails/uploads
+    sudo rm -rf /rails/uploads
+    sudo ln -sf /rails/storage/uploads /rails/uploads
     
     # Also create tmp/uploads symlink for backup compatibility
-    rm -rf /rails/tmp/uploads
-    ln -sf /rails/storage/uploads /rails/tmp/uploads
+    sudo rm -rf /rails/tmp/uploads
+    sudo ln -sf /rails/storage/uploads /rails/tmp/uploads
+    
+    # Ensure rails user owns the symlinks
+    sudo chown -h rails:rails /rails/uploads /rails/tmp/uploads
   else
     # Fallback to uploads directory if no volume
     mkdir -p /rails/uploads
