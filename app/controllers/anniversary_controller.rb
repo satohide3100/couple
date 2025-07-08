@@ -17,6 +17,8 @@ class AnniversaryController < ApplicationController
   end
 
   def update
+    Rails.logger.info "=== Anniversary Update Debug ==="
+    Rails.logger.info "Params: #{params.inspect}"
     if params[:couple_photo]
       @couple_photo = CouplePhoto.new(couple_photo_params)
       @couple_photo.is_background = true
@@ -40,8 +42,12 @@ class AnniversaryController < ApplicationController
       end
       
       if @profile.save
+        Rails.logger.info "Profile saved successfully"
+        Rails.logger.info "Avatar file: #{@profile.avatar}"
+        Rails.logger.info "Avatar URL: #{@profile.avatar.url}" if @profile.avatar?
         redirect_to anniversary_path, notice: 'プロフィールを更新しました'
       else
+        Rails.logger.error "Profile save failed: #{@profile.errors.full_messages}"
         redirect_to anniversary_path, alert: 'プロフィールの更新に失敗しました'
       end
     else
