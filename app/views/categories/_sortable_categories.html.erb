@@ -1,0 +1,50 @@
+<%# locals: (categories:) %>
+<div class="space-y-3"
+     data-controller="sortable"
+     data-sortable-url-value="/categories/:id/move"
+     data-sortable-handle-value="drag-handle">
+  <% categories.each do |category| %>
+    <div id="category_<%= category.id %>" 
+         class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-4"
+         data-sortable-id="<%= category.id %>">
+      <div class="flex items-center gap-3">
+        <!-- ドラッグハンドル -->
+        <div class="drag-handle cursor-move text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-400">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"></path>
+          </svg>
+        </div>
+
+        <!-- カテゴリー情報 -->
+        <div class="flex-1 flex items-center gap-3">
+          <!-- カテゴリーアイコン -->
+          <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm"
+               style="background: <%= category_color(category.name) %>">
+            <%= category_icon(category) %>
+          </div>
+
+          <!-- カテゴリー名と件数 -->
+          <div class="flex-1">
+            <h3 class="font-medium text-gray-900 dark:text-white"><%= category.name %></h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400">
+              <%= category.places.count %>件
+              <% if category.unvisited_places_count > 0 %>
+                · 未訪問 <%= category.unvisited_places_count %>件
+              <% end %>
+            </p>
+          </div>
+
+          <!-- 編集ボタン -->
+          <button data-controller="modal"
+                  data-action="click->modal#open"
+                  data-modal-target-value="edit-category-<%= category.id %>-modal"
+                  class="text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-400 p-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,34 @@
+<%# locals: (category:, place:) %>
+<%= form_with model: place, url: places_path, class: "space-y-3", data: { controller: "form-submit", action: "turbo:submit-end->form-submit#handleSubmit" } do |form| %>
+  <%= form.hidden_field :category_id, value: category.id %>
+  
+  <div>
+    <%= form.text_field :name,
+                        class: "w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white",
+                        placeholder: "新しい場所を追加...",
+                        required: true %>
+  </div>
+
+  <div>
+    <%= form.text_area :memo,
+                       class: "w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white text-sm",
+                       placeholder: "メモ（任意）",
+                       rows: 2 %>
+  </div>
+
+  <div class="flex items-center gap-3">
+    <label class="flex items-center gap-2 cursor-pointer">
+      <%= form.check_box :visited, class: "w-4 h-4 text-blue-600 rounded focus:ring-blue-500" %>
+      <span class="text-sm text-gray-600 dark:text-gray-400">すでに訪問済み</span>
+    </label>
+  </div>
+
+  <div class="flex gap-3 justify-end">
+    <button type="button"
+            data-action="click->modal#close"
+            class="px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition">
+      キャンセル
+    </button>
+    <%= form.submit "追加", class: "px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg transition font-medium" %>
+  </div>
+<% end %>

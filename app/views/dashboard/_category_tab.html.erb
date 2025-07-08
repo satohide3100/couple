@@ -1,0 +1,35 @@
+<%# locals: (category:, current: false) %>
+<div id="category_tab_<%= category.id %>" class="flex items-center gap-1">
+  <%= link_to dashboard_category_path(category, filter: params[:filter]), 
+              local: false,
+              class: "flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap #{current ? 'bg-blue-500 text-white shadow-sm' : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'}" do %>
+  
+  <!-- カテゴリーアイコン -->
+  <div class="w-6 h-6 rounded-full flex items-center justify-center text-xs"
+       style="background: <%= current ? 'rgba(255,255,255,0.2)' : category_color(category.name) %>">
+    <%= category_icon(category) %>
+  </div>
+  
+  <!-- カテゴリー名 -->
+  <span><%= category.name %></span>
+  
+  <!-- 未訪問件数バッジ -->
+  <% if category.unvisited_places_count > 0 %>
+    <div class="<%= current ? 'bg-white/20' : 'bg-red-500' %> text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+      <%= category.unvisited_places_count %>
+    </div>
+  <% end %>
+  <% end %>
+  
+  <!-- 編集ボタン -->
+  <% if current %>
+    <button data-controller="modal"
+            data-action="click->modal#open"
+            data-modal-target-value="edit-category-<%= category.id %>-modal"
+            class="text-white/70 hover:text-white p-1 ml-1">
+      <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+      </svg>
+    </button>
+  <% end %>
+</div>

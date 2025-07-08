@@ -1,0 +1,19 @@
+<%= form_with model: category, id: "category_form" do |form| %>
+  <div class="space-y-4">
+    <div>
+      <%= form.label :name, "カテゴリー名", class: "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1" %>
+      <%= form.text_field :name, 
+                          class: "w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-700 dark:text-white",
+                          placeholder: "例: レストラン、旅行先、アクティビティ" %>
+    </div>
+
+    <div class="flex gap-3 justify-end">
+      <button type="button"
+              data-action="click->modal#close"
+              class="px-4 py-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition">
+        キャンセル
+      </button>
+      <%= form.submit "作成", class: "px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition" %>
+    </div>
+  </div>
+<% end %>

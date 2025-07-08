@@ -1,0 +1,7 @@
+<%# locals: (places:) %>
+<div id="places-list" 
+     data-controller="sortable"
+     data-sortable-url-value="/places/:id/move"
+     class="space-y-2 mb-6">
+  <%= render partial: "dashboard/place_item", collection: places, as: :place %>
+</div>

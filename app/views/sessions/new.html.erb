@@ -1,0 +1,30 @@
+<div class="flex items-center justify-center min-h-[80vh]"
+     data-controller="liff"
+     data-liff-id-value="<%= ENV['LIFF_ID'] %>">
+  <div class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl max-w-md w-full">
+    <div class="text-center mb-8">
+      <h2 class="text-3xl font-bold mb-2 bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
+        Couples Bucket List
+      </h2>
+      <p class="text-gray-600 dark:text-gray-400">
+        二人の思い出を記録しよう
+      </p>
+    </div>
+
+    <div class="space-y-4">
+      <button data-action="click->liff#login"
+              class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg transition flex items-center justify-center gap-2">
+        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+          <path d="M16.5 12c0 .28-.11.53-.29.71l-3 3c-.18.18-.43.29-.71.29s-.53-.11-.71-.29a1.003 1.003 0 010-1.42L13.09 13H8c-.55 0-1-.45-1-1s.45-1 1-1h5.09l-1.3-1.29a1.003 1.003 0 011.42-1.42l3 3c.18.18.29.43.29.71z"/>
+        </svg>
+        LINEでログイン
+      </button>
+
+      <p class="text-xs text-gray-500 dark:text-gray-400 text-center">
+        LINEアカウントでログインすることで、<br>
+        二人だけのバケットリストを作成できます
+      </p>
+    </div>
+  </div>
+</div>

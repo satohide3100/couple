@@ -1,0 +1,66 @@
+<%= turbo_frame_tag category do %>
+  <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 border border-gray-100 dark:border-gray-700 relative group">
+    <%= link_to category_places_path(category), class: "block p-4" do %>
+      <div class="flex items-center justify-between">
+        <!-- 左側：アイコンとカテゴリー情報 -->
+        <div class="flex items-center gap-3 flex-1 min-w-0">
+          <!-- カテゴリーアイコン -->
+          <div class="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold"
+               style="background: <%= category_color(category.name) %>">
+            <%= category_icon(category.name) %>
+          </div>
+          
+          <!-- カテゴリー情報 -->
+          <div class="flex-1 min-w-0">
+            <h3 class="font-semibold text-gray-900 dark:text-white truncate">
+              <%= category.name %>
+            </h3>
+            <div class="flex items-center gap-4 mt-1">
+              <span class="text-sm text-gray-500 dark:text-gray-400">
+                <%= category.unvisited_places_count %>件が未訪問
+              </span>
+              <% if category.completion_rate > 0 %>
+                <span class="text-xs text-green-600 dark:text-green-400 font-medium">
+                  <%= category.completion_rate %>%完了
+                </span>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <!-- 右側：進捗とアクション -->
+        <div class="flex items-center gap-3">
+          <!-- 未訪問カウント -->
+          <% if category.unvisited_places_count > 0 %>
+            <div class="bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
+              <%= category.unvisited_places_count %>
+            </div>
+          <% else %>
+            <div class="text-green-500">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+          <% end %>
+          
+          <!-- 矢印アイコン -->
+          <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </div>
+      </div>
+    <% end %>
+
+    <!-- 削除ボタン -->
+    <div class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition">
+      <%= button_to category_path(category), 
+                    method: :delete,
+                    data: { turbo_confirm: "このカテゴリーと関連する場所をすべて削除しますか？" },
+                    class: "text-red-500 hover:text-red-700 p-1 bg-white rounded-full shadow-sm" do %>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+        </svg>
+      <% end %>
+    </div>
+  </div>
+<% end %>

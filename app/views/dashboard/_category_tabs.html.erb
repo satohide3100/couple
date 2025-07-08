@@ -1,0 +1,27 @@
+<%# locals: (categories:, current_category:) %>
+<div class="flex gap-2 overflow-x-auto items-center scrollbar-hide" 
+     data-controller="scroll-to-active">
+  <% categories.each do |category| %>
+    <%= render "category_tab", category: category, current: category == current_category %>
+  <% end %>
+
+  <!-- カテゴリー追加ボタン -->
+  <button data-controller="modal"
+          data-action="click->modal#open"
+          data-modal-target-value="new-category-modal"
+          class="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+    </svg>
+    <span>追加</span>
+  </button>
+
+  <!-- カテゴリー並び替えボタン -->
+  <%= link_to categories_path, 
+              class: "flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600" do %>
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"></path>
+    </svg>
+    <span>並び替え</span>
+  <% end %>
+</div>

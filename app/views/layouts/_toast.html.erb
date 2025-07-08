@@ -1,0 +1,20 @@
+<% if message.present? %>
+  <div data-controller="toast" 
+       data-toast-delay-value="4000"
+       class="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 animate-slide-down">
+    <div class="<%= type == 'success' ? 'bg-green-500' : 'bg-red-500' %> text-white px-6 py-4 rounded-lg shadow-lg flex items-center gap-3 min-w-0 max-w-sm">
+      <div class="flex-shrink-0">
+        <% if type == 'success' %>
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+        <% else %>
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        <% end %>
+      </div>
+      <span class="text-sm font-medium"><%= message %></span>
+    </div>
+  </div>
+<% end %>

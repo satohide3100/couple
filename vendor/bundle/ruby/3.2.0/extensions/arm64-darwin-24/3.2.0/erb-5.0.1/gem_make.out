@@ -1,0 +1,19 @@
+current directory: /Users/satouhideakira/couple/vendor/bundle/ruby/3.2.0/gems/erb-5.0.1/ext/erb/escape
+/Users/satouhideakira/.rbenv/versions/3.2.2/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /Users/satouhideakira/couple/vendor/bundle/ruby/3.2.0/gems/erb-5.0.1/ext/erb/escape
+make DESTDIR\= sitearchdir\=./.gem.20250708-67777-sprkle sitelibdir\=./.gem.20250708-67777-sprkle clean
+
+current directory: /Users/satouhideakira/couple/vendor/bundle/ruby/3.2.0/gems/erb-5.0.1/ext/erb/escape
+make DESTDIR\= sitearchdir\=./.gem.20250708-67777-sprkle sitelibdir\=./.gem.20250708-67777-sprkle
+compiling escape.c
+linking shared-object erb/escape.bundle
+ld: warning: ignoring duplicate libraries: '-lruby.3.2'
+
+current directory: /Users/satouhideakira/couple/vendor/bundle/ruby/3.2.0/gems/erb-5.0.1/ext/erb/escape
+make DESTDIR\= sitearchdir\=./.gem.20250708-67777-sprkle sitelibdir\=./.gem.20250708-67777-sprkle install
+/usr/bin/install -c -m 0755 escape.bundle ./.gem.20250708-67777-sprkle/erb
+
+current directory: /Users/satouhideakira/couple/vendor/bundle/ruby/3.2.0/gems/erb-5.0.1/ext/erb/escape
+make DESTDIR\= sitearchdir\=./.gem.20250708-67777-sprkle sitelibdir\=./.gem.20250708-67777-sprkle clean

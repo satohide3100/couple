@@ -1,0 +1,137 @@
+<!-- Toast container -->
+<div id="toast"></div>
+
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+  <!-- ヘッダー -->
+  <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40 mb-0">
+    <!-- カテゴリータブ -->
+    <div class="px-4 py-3">
+      <div id="category-tabs">
+        <%= render "category_tabs", categories: @categories, current_category: @current_category %>
+      </div>
+    </div>
+  </header>
+
+  <!-- メインコンテンツ -->
+  <main class="px-4 pt-5">
+    <% if @current_category %>
+      <!-- フィルター -->
+      <div id="filter-section" class="mb-4">
+        <%= render "filter_section", current_category: @current_category %>
+      </div>
+
+      <!-- 場所リスト -->
+      <div id="places-list"
+           data-controller="sortable"
+           data-sortable-url-value="/places/:id/move"
+           class="space-y-2 mb-6">
+        <%= render partial: "place_item", collection: @places, as: :place %>
+      </div>
+
+
+    <% else %>
+      <!-- 空の状態 -->
+      <div class="text-center py-12">
+        <div class="text-6xl mb-4">📝</div>
+        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">カテゴリーを作成しましょう</h3>
+        <p class="text-gray-500 dark:text-gray-400 mb-6">右上の + ボタンから新しいカテゴリーを追加できます</p>
+        <button data-controller="modal"
+                data-action="click->modal#open"
+                data-modal-target-value="new-category-modal"
+                class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-medium">
+          カテゴリーを作成
+        </button>
+      </div>
+    <% end %>
+  </main>
+
+</div>
+
+<!-- カテゴリー作成モーダル -->
+<div id="new-category-modal"
+     data-controller="modal"
+     class="fixed inset-0 z-50 hidden">
+  <div class="fixed inset-0 bg-black bg-opacity-50" data-action="click->modal#close"></div>
+  <div class="fixed inset-x-4 top-20 max-w-md mx-auto">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-2xl p-6">
+      <h3 class="text-lg font-semibold mb-4">新しいカテゴリー</h3>
+      <div id="new_category_form">
+        <%= render "category_form", category: @new_category %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 新しい場所追加モーダル -->
+<% if @current_category %>
+  <div id="new-place-modal"
+       data-controller="modal"
+       class="fixed inset-0 z-50 hidden">
+    <div class="fixed inset-0 bg-black bg-opacity-50" data-action="click->modal#close"></div>
+    <div class="fixed inset-x-4 top-20 max-w-md mx-auto">
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-2xl p-6">
+        <h3 class="text-lg font-semibold mb-4">新しい場所を追加</h3>
+        <div id="new_place_form">
+          <%= render "place_form", category: @current_category, place: @new_place %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<!-- カテゴリー編集モーダル -->
+<% if @current_category %>
+  <div id="edit-category-<%= @current_category.id %>-modal"
+       data-controller="modal"
+       class="fixed inset-0 z-50 hidden">
+    <div class="fixed inset-0 bg-black bg-opacity-50" data-action="click->modal#close"></div>
+    <div class="fixed inset-x-4 top-20 max-w-md mx-auto">
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-2xl p-6">
+        <h3 class="text-lg font-semibold mb-4">カテゴリーを編集</h3>
+        <div id="edit_category_<%= @current_category.id %>_form">
+          <%= render "category_form", category: @current_category %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<!-- 場所編集モーダル -->
+<% if @current_category && @places %>
+  <% @places.each do |place| %>
+    <div id="edit-place-<%= place.id %>-modal"
+         data-controller="modal"
+         class="fixed inset-0 z-50 hidden">
+      <div class="fixed inset-0 bg-black bg-opacity-50" data-action="click->modal#close"></div>
+      <div class="fixed inset-x-4 top-20 max-w-md mx-auto">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-2xl p-6">
+          <h3 class="text-lg font-semibold mb-4">場所を編集</h3>
+          <div id="edit_place_<%= place.id %>_form">
+            <%= render "place_edit_form", place: place %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+<!-- フローティングアクションボタン -->
+<% if @current_category %>
+  <button type="button"
+          data-controller="modal"
+          data-action="click->modal#open"
+          data-modal-target-value="new-place-modal"
+          class="fixed w-10 h-10 bg-blue-500 hover:bg-blue-600 text-white rounded-full transition-all duration-200 flex items-center justify-center shadow-md hover:shadow-lg"
+          style="position: fixed !important; bottom: 1.5rem !important; right: 1.5rem !important; z-index: 9999 !important;">
+    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+    </svg>
+  </button>
+<% end %>
+
+<!-- 記念日カウントボタン -->
+<%= link_to anniversary_path,
+            class: "fixed w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white rounded-full transition-all duration-200 flex items-center justify-center shadow-lg hover:shadow-xl",
+            style: "position: fixed !important; bottom: 1.5rem !important; left: 1.5rem !important; z-index: 9999 !important;" do %>
+  <span class="text-2xl">💕</span>
+<% end %>
