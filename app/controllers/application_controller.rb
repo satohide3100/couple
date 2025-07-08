@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   # アップロードされたファイルの配信（本番環境用）
   def serve_file
     if Rails.env.production?
-      file_path = Rails.root.join('storage', 'uploads', params[:path])
+      file_path = Rails.root.join('tmp', 'uploads', params[:path])
       if File.exist?(file_path)
         send_file file_path, disposition: 'inline'
       else
