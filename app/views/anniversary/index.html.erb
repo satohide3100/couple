@@ -671,8 +671,8 @@
                    onchange="previewProfileImage(this, 'male')">
             <label for="profile_avatar_male" class="cursor-pointer">
               <div id="profile-preview-male" class="w-24 h-24 bg-gradient-to-br from-cyan-400 via-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto shadow-2xl ring-4 ring-blue-400/30 transition-all duration-300 group-hover:ring-blue-400/50 overflow-hidden">
-                <% if @male_profile&.avatar&.attached? %>
-                  <img src="<%= url_for(@male_profile.avatar) %>" class="w-full h-full object-cover" alt="プロフィール画像">
+                <% if @male_profile&.avatar? %>
+                  <img src="<%= @male_profile.avatar.url %>" class="w-full h-full object-cover" alt="プロフィール画像">
                 <% else %>
                   <span class="text-white font-bold text-2xl drop-shadow-lg">ひ</span>
                 <% end %>
@@ -733,8 +733,8 @@
                    onchange="previewProfileImage(this, 'female')">
             <label for="profile_avatar_female" class="cursor-pointer">
               <div id="profile-preview-female" class="w-24 h-24 bg-gradient-to-br from-pink-400 via-rose-500 to-pink-600 rounded-full flex items-center justify-center mx-auto shadow-2xl ring-4 ring-pink-400/30 transition-all duration-300 group-hover:ring-pink-400/50 overflow-hidden">
-                <% if @female_profile&.avatar&.attached? %>
-                  <img src="<%= url_for(@female_profile.avatar) %>" class="w-full h-full object-cover" alt="プロフィール画像">
+                <% if @female_profile&.avatar? %>
+                  <img src="<%= @female_profile.avatar.url %>" class="w-full h-full object-cover" alt="プロフィール画像">
                 <% else %>
                   <span class="text-white font-bold text-2xl drop-shadow-lg">り</span>
                 <% end %>
