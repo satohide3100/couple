@@ -6,6 +6,13 @@ export default class extends Controller {
   async connect() {
     console.log("LIFF Controller connected with ID:", this.idValue)
     
+    // LIFF IDが設定されているかチェック
+    if (!this.idValue || this.idValue.trim() === '') {
+      console.error("LIFF ID is not set or empty")
+      this.showErrorMessage("LIFF IDが設定されていません。環境変数を確認してください。")
+      return
+    }
+    
     try {
       // LIFF SDKを動的にロード
       console.log("Loading LIFF SDK...")
