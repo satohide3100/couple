@@ -7,13 +7,17 @@ class ApplicationController < ActionController::Base
   # アップロードされたファイルの配信（本番環境用）
   def serve_file
     if Rails.env.production?
+      # パスに拡張子を追加
+      path_with_ext = params[:path].include?('.') ? params[:path] : "#{params[:path]}.jpeg"
+      
       # Try both uploads and tmp/uploads paths
-      file_path = Rails.root.join('uploads', params[:path])
-      tmp_file_path = Rails.root.join('tmp', 'uploads', params[:path])
+      file_path = Rails.root.join('uploads', path_with_ext)
+      tmp_file_path = Rails.root.join('tmp', 'uploads', path_with_ext)
       
       # デバッグログを追加
       Rails.logger.info "=== File Serve Debug ==="
-      Rails.logger.info "Requested path: #{params[:path]}"
+      Rails.logger.info "Original path: #{params[:path]}"
+      Rails.logger.info "Path with extension: #{path_with_ext}"
       Rails.logger.info "File path: #{file_path}"
       Rails.logger.info "Tmp file path: #{tmp_file_path}"
       Rails.logger.info "File exists: #{File.exist?(file_path)}"
@@ -27,14 +31,14 @@ class ApplicationController < ActionController::Base
         send_file actual_file_path, disposition: 'inline'
       else
         Rails.logger.info "File not found in either location"
-        # List directories for debugging
-        ['uploads', 'tmp/uploads'].each do |dir|
-          full_dir = Rails.root.join(dir)
-          if Dir.exist?(full_dir)
-            Rails.logger.info "#{dir} directory contents: #{Dir.entries(full_dir)}"
-          else
-            Rails.logger.info "Directory does not exist: #{full_dir}"
-          end
+        # List the actual directory contents to see what files exist
+        base_dir = File.dirname(file_path)
+        if Dir.exist?(base_dir)
+          Rails.logger.info "Directory #{base_dir} contents: #{Dir.entries(base_dir)}"
+        end
+        tmp_base_dir = File.dirname(tmp_file_path)
+        if Dir.exist?(tmp_base_dir)
+          Rails.logger.info "Directory #{tmp_base_dir} contents: #{Dir.entries(tmp_base_dir)}"
         end
         render plain: "File not found", status: 404
       end
