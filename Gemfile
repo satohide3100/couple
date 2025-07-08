@@ -6,7 +6,8 @@ ruby "3.2.2"
 # Rails フレームワーク
 gem "rails", "~> 7.1.3"
 gem "sprockets-rails"
-gem "sqlite3", "~> 1.4"
+gem "sqlite3", "~> 1.4", group: [:development, :test]
+gem "pg", "~> 1.1", group: :production
 gem "puma", ">= 5.0"
 
 # JavaScript/CSS バンドリング
