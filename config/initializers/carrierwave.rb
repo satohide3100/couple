@@ -5,6 +5,9 @@ CarrierWave.configure do |config|
   # 本番環境でのアップロードディレクトリ設定
   if Rails.env.production?
     config.root = Rails.root.join('public')
+    # Ensure uploads directory exists and is writable
+    uploads_dir = Rails.root.join('public', 'uploads')
+    FileUtils.mkdir_p(uploads_dir) unless Dir.exist?(uploads_dir)
   else
     config.root = Rails.root
   end
