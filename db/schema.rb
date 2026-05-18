@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_07_08_202041) do
+ActiveRecord::Schema[7.1].define(version: 2026_05_18_140000) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -39,6 +39,27 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_08_202041) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "bank_deposits", force: :cascade do |t|
+    t.string "message_id", null: false
+    t.string "amount", null: false
+    t.string "remitter_name"
+    t.string "value_date"
+    t.string "transaction_date"
+    t.string "va_account_number"
+    t.string "va_account_name"
+    t.string "payment_bank_name"
+    t.text "remarks"
+    t.datetime "event_timestamp"
+    t.datetime "notified_at"
+    t.text "raw_payload", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "source", default: "freee", null: false
+    t.index ["message_id"], name: "index_bank_deposits_on_message_id", unique: true
+    t.index ["notified_at"], name: "index_bank_deposits_on_notified_at"
+    t.index ["source"], name: "index_bank_deposits_on_source"
+  end
+
   create_table "categories", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -57,6 +78,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_08_202041) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "image"
+  end
+
+  create_table "freee_credentials", force: :cascade do |t|
+    t.text "access_token"
+    t.text "refresh_token"
+    t.datetime "expires_at"
+    t.string "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "places", force: :cascade do |t|
